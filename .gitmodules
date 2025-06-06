@@ -1,3 +1,6 @@
 [submodule "DR-Robot"]
 	path = DR-Robot
 	url = https://github.com/DoRobot-Project/DR-Robot.git
+[submodule "DR-Dataset"]
+	path = DR-Dataset
+	url = https://github.com/DoRobot-Project/DR-Dataset.git
