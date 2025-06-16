@@ -1,1 +1,80 @@
-ss
+nodes:
+  - id: camera_top
+    path: ../DR-Robot/common/components/camera_rgbd_orbbec_v1/main.py
+    inputs:
+      tick: dora/timer/millis/40
+    outputs:
+      - image
+      - image_depth
+    env:
+      GET_DEVICE_FROM: SN
+      DEVICE_SN: CC1S7410144
+
+  - id: camera_right
+    path: ../DR-Robot/common/components/camera_rgbd_orbbec_v1/main.py
+    inputs:
+      tick: dora/timer/millis/40
+    outputs:
+      - image
+      - image_depth
+    env:
+      GET_DEVICE_FROM: SN
+      DEVICE_SN: CC1S74100MH
+
+  - id: camera_left
+    path: ../DR-Robot/common/components/camera_rgbd_orbbec_v1/main.py
+    inputs:
+      tick: dora/timer/millis/40
+    outputs:
+      - image
+      - image_depth
+    env:
+      GET_DEVICE_FROM: SN
+      DEVICE_SN: CC1S74100SZ
+
+
+  - id: zeromq
+    path: ../DR-Robot/common/dora_zeromq.py
+    inputs: 
+      image_top: 
+        source: camera_top/image
+        queue_size: 1
+      image_depth_top:
+        source: camera_top/image_depth
+        queue_size: 1
+      image_right:
+        source: camera_right/image
+        queue_size: 1
+      image_depth_right:
+        source: camera_right/image_depth
+        queue_size: 1
+      image_left:
+        source: camera_left/image
+        queue_size: 1
+      image_depth_left:
+        source: camera_left/image_depth
+        queue_size: 1
+
+  # - id: rerun
+  #   path: dora-rerun
+  #   inputs:
+  #     image_top: 
+  #       source: camera_top/image
+  #       queue_size: 1
+  #     image_depth_top:
+  #       source: camera_top/image_depth
+  #       queue_size: 1
+  #     image_right:
+  #       source: camera_right/image
+  #       queue_size: 1
+  #     image_depth_right:
+  #       source: camera_right/image_depth
+  #       queue_size: 1
+  #     image_left:
+  #       source: camera_left/image
+  #       queue_size: 1
+  #     image_depth_left:
+  #       source: camera_left/image_depth
+  #       queue_size: 1
+  #   env:
+  #     RERUN_MEMORY_LIMIT: 25%
