@@ -1,0 +1,7 @@
+[package]
+name = "load_dora"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+d-pipeline = { workspace = true }

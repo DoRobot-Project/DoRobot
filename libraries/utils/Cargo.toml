@@ -1,0 +1,13 @@
+[package]
+name = "utils"
+edition.workspace = true
+rust-version.workspace = true
+version.workspace = true
+description.workspace = true
+documentation.workspace = true
+readme.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[dependencies]
+path-clean = "1.0.1"

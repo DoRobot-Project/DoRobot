@@ -1,0 +1,84 @@
+{
+  "domains": {
+    "nodes": [
+      {
+        "id": "camera_top",
+        "path": "components/camera_opencv/main.py",
+        "inputs": {
+          "tick": "dora/timer/millis/33"
+        },
+        "outputs": [
+          "image"
+        ],
+        "env": {
+          "IMAGE_WIDTH": "640",
+          "CAPTURE_PATH": "4",
+          "IMAGE_HEIGHT": "480"
+        }
+      },
+      {
+        "id": "camera_wrist",
+        "path": "../../components/camera_opencv/main.py",
+        "inputs": {
+          "tick": "dora/timer/millis/33"
+        },
+        "outputs": [
+          "image"
+        ],
+        "env": {
+          "CAPTURE_PATH": "6",
+          "IMAGE_WIDTH": "640",
+          "IMAGE_HEIGHT": "480"
+        }
+      },
+      {
+        "id": "arm_so101_leader",
+        "path": "../../components/arm_normal_so101_v1/main.py",
+        "inputs": {
+          "get_joint": "dora/timer/millis/33"
+        },
+        "outputs": [
+          "joint"
+        ],
+        "env": {
+          "ARM_NAME": "SO101-leader",
+          "ARM_ROLE": "leader",
+          "CALIBRATION_DIR": "../../components/arm_normal_so101_v1/.calibration/",
+          "GET_DEVICE_FROM": "PORT",
+          "PORT": "/dev/ttyACM0"
+        }
+      },
+      {
+        "id": "arm_so101_follower",
+        "path": "../../components/arm_normal_so101_v1/main.py",
+        "inputs": {
+          "get_joint": "dora/timer/millis/33",
+          "action_joint": "arm_so101_leader/joint"
+        },
+        "outputs": [
+          "joint"
+        ],
+        "env": {
+          "ARM_ROLE": "follower",
+          "ARM_NAME": "SO101-follower",
+          "GET_DEVICE_FROM": "PORT",
+          "PORT": "/dev/ttyACM1",
+          "CALIBRATION_DIR": "../../components/arm_normal_so101_v1/.calibration/"
+        }
+      },
+      {
+        "id": "so101_zeromq",
+        "path": "dora_zeromq.py",
+        "inputs": {
+          "main_leader_joint": "arm_so101_leader/joint",
+          "image_top": "camera_top/image",
+          "main_follower_joint": "arm_so101_follower/joint",
+          "image_wrist": "camera_wrist/image"
+        },
+        "outputs": [
+          "action_joint"
+        ]
+      }
+    ]
+  }
+}
